@@ -34,5 +34,36 @@ export const resolversUser = {
                 };
             }
         },
+        loginUser: async (_, args) => {
+            const { email, password } = args.user;
+
+            const infoUser = await User.findOne({
+                email: email,
+                deleted: false,
+            });
+
+            if (!infoUser) {
+                return {
+                    code: 400,
+                    message: "Email Không Tồn Tại!"
+                };
+            }
+
+            if (md5(password) !== infoUser.password) {
+                return {
+                    code: 400,
+                    message: "Sai Mật Khẩu!"
+                };
+            }
+
+            return {
+                code: 200,
+                message: "Thành Công !",
+                id: infoUser.id,
+                fullName: infoUser.fullName,
+                email: infoUser.email,
+                token: infoUser.token,
+            };
+        },
     }
 };
