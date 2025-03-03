@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import * as database from "./config/database";
 import { ApolloServer, gql } from "apollo-server-express";
 
-import { typeDefs } from "./typeDefs";
 import { resolvers } from "./resolvers";
+import { typeDefs } from "./typeDefs/index.typeDefs";
 
 const startServer = async () => {
     dotenv.config();
@@ -16,7 +16,7 @@ const startServer = async () => {
 
     // GraphQL
     const apolloServer = new ApolloServer({
-        typeDefs,
+        typeDefs: typeDefs,
         resolvers
     });
 
